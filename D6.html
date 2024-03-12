@@ -34,7 +34,7 @@
   </head>
 
   <body>
-    <div id="first-div">
+    <div>
       <h1>Questo è il titolo della pagina</h1>
       <h2>Questo è il sottotitolo della pagina</h2>
     </div>
@@ -54,16 +54,14 @@
         <li>3rd</li>
       </ul>
 
-      <a id="new-link" href="https://epicode.com/it/"
-        >Questo link porta al sito di Epicode</a
-      >
+      <a href="https://epicode.com/it/">Questo link porta al sito di Epicode</a>
 
-      <div class="ex-div">
+      <div>
         <p>Questo testo è un placeholder per gli esercizi</p>
       </div>
     </div>
 
-    <div class="ex-div">
+    <div>
       <p>Anche questo testo è per gli esercizi</p>
       <h2 id="changeMyColor" style="color: #ff00d6">
         Apri questa pagina con VSCode per scoprire gli esercizi
@@ -96,19 +94,22 @@
       /* ESERCIZIO 2
        Scrivi una funzione per aggiungere al titolo della pagina una classe "myHeading"
     */
-
-      const addClassToTitle = function (newClass) {
-        const heading = document.getElementsByTagName("h1");
-        heading.classList.add("new-class");
+      const addClassToTitle = function () {
+        const title = document.querySelector("h1");
+        title.classList.remove("myClass");
+        title.classList.add("myHeading");
       };
+      addClassToTitle();
 
       /* ESERCIZIO 3
        Scrivi una funzione che cambi il testo dei p figli di un div
       */
 
       const changePcontent = function (newTextOfP) {
-        const oldP = document.querySelector(".ex-div p");
-        oldP.innerText = newTextOfP;
+        const oldP = document.querySelectorAll("div p");
+        oldP.forEach((pContent) => {
+          pContent.innerText = newTextOfP;
+        });
       };
       changePcontent("Introduzione agli esercizi");
 
@@ -116,27 +117,38 @@
        Scrivi una funzione che cambi la proprietà href di ogni link (tranne quello nel footer) con il valore https://www.google.com
       */
 
-      const changeUrls = function (newAncor) {
-        const oldAncor = document.getElementById("new-link");
-        oldAncor.innerText = newAncor;
+      const changeUrls = function () {
+        const links = document.querySelectorAll("a:not(footer a)");
+        for (let i = 0; i < links.length; i++) {
+          links[i].href = "https://www.google.com";
+        }
       };
-      changeUrls = " https://www.google.com";
+      changeUrls();
 
       /* ESERCIZIO 5
        Scrivi una funzione che aggiunga un nuovo elemento lista alla seconda lista non ordinata
     */
 
-      const addToTheSecond = function () {};
+      const addToTheSecond = function (content) {
+        const ul = document.getElementById("secondList");
+        const li = document.createElement("li");
+        li.innerText = content;
+        ul.appendChild(li);
+      };
+      addToTheSecond("4TH");
 
       /* ESERCIZIO 6
        Scrivi una funzione che aggiunga un paragrafo al primo div
     */
 
-      const addParagraph = function () {
-        const newP = document.createElement("p");
-        newP.innerText = "Mi chiamo Lorenzo e sono uno studente epicode";
-        firstDiv.appendChild(newP);
+      const addParagraph = function (content) {
+        const div = document.querySelectorAll("div")[0];
+
+        let par = document.createElement("p");
+        par.innerText = content;
+        div.appendChild(par);
       };
+      addParagraph("Nuovo paragrafo per questo primo div");
 
       /* ESERCIZIO 7
        Scrivi una funzione che faccia scomparire la prima lista non ordinata
@@ -144,13 +156,20 @@
 
       const hideFirstUl = function () {
         const firstUl = document.getElementById("firstList");
+        firstUl.remove();
       };
 
       /* ESERCIZIO 8 
        Scrivi una funzione che renda verde il background di ogni lista non ordinata
       */
 
-      const paintItGreen = function () {};
+      const paintItGreen = function () {
+        const allUl = document.querySelectorAll("ul");
+        for (let i = 0; i < allUl.length; i++) {
+          allUl[i].style.backgroundColor = "green";
+        }
+      };
+      paintItGreen();
 
       /* ESERCIZIO 9
        Scrivi una funzione che rimuova l'ultima lettera dall'h1 ogni volta che l'utente lo clicca
